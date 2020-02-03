@@ -10,4 +10,11 @@ services:
         build: ./zelda-cookbook-backend
         ports:
             - "81:3000"
-    # front:
+    zelda-cookbook-frontend:
+        build: ./zelda-cookbook-frontend
+        ports:
+            - "82:3000"
+        depends_on:
+            - "db"
+            - "zelda-cookbook-backend"
+
