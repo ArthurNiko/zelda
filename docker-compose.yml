@@ -8,13 +8,25 @@ services:
             - "POSTGRES_DB=zelda_cookbook"
     zelda-cookbook-backend:
         build: ./zelda-cookbook-backend
-        ports:
-            - "81:3000"
+        # ports:
+        #     - "81:3100"
     zelda-cookbook-frontend:
         build: ./zelda-cookbook-frontend
-        ports:
-            - "82:3000"
+        # ports:
+        #     - "82:3000"
         depends_on:
             - "db"
             - "zelda-cookbook-backend"
-
+    nginx:
+        build:
+            context: .
+            dockerfile: dockerfile
+        ports:
+            - "80:3000"
+            - "85:3100"
+        volumes:
+            - "/home/bynet13/Desktop/zelda/nginx.conf:/etc/nginx/nginx.conf"
+        depends_on:
+            - "db"
+            - "zelda-cookbook-frontend"
+            - "zelda-cookbook-backend"
